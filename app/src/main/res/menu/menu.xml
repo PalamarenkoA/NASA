@@ -1,0 +1,11 @@
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item1"
+        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Редактировать"
+        tools:ignore="AppCompatResource" />
+</menu>

@@ -13,9 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andrey.nasa.Objects.Day;
+import com.example.andrey.nasa.OnSwipeTouchListener;
 import com.example.andrey.nasa.R;
 import com.example.andrey.nasa.SetWall;
 import com.example.andrey.nasa.loaders.NasaLoaders;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TextView  explanation;
     TextView date;
     Context context;
+    Date dateObj;
+    GregorianCalendar calendarToday;
     GregorianCalendar calendar;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+        calendarToday = new GregorianCalendar();
+        calendarToday.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
 
@@ -59,8 +63,43 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         explanation = (TextView) findViewById(R.id.textView2);
         imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.progress_animation);
+        imageView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeTop() {
+            }
+
+            public void onSwipeRight() {
+                if(calendar.getTimeInMillis() >= calendarToday.getTimeInMillis()){
+                    Toast.makeText(context, "Остання дата", Toast.LENGTH_SHORT).show();
+                }else{
+                    calendar.setTimeInMillis(calendar.getTimeInMillis() + 86400000);
+
+                    connect(calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                }
+
+            }
+
+            public void onSwipeLeft() {
+               calendar.setTimeInMillis(calendar.getTimeInMillis() - 86400000);
+
+                connect(calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            }
+
+            public void onSwipeBottom() {
+                SetWall setWall = new SetWall();
+                if(thisDay != null){
+                    setWall.execute(thisDay.getUrl());
+                    Toast.makeText(context,"Loading",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(context,"Зображення не знайдено",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
         date = (TextView) findViewById(R.id.date);
-        connect(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        connect(calendarToday.get(Calendar.YEAR), calendarToday.get(Calendar.MONTH), calendarToday.get(Calendar.DAY_OF_MONTH));
 
 
     }
@@ -71,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void connect(int year, int month, int day){
         Bundle bundle = new Bundle();
         Toast.makeText(context, dateBilder(year,month,day), Toast.LENGTH_LONG).show();
+        calendar = new GregorianCalendar();
+        calendar.set(year, month,day);
+
         bundle.putString("date", dateBilder(year, month, day));
         imageView.setImageResource(R.drawable.progress_animation);
         getLoaderManager().initLoader(LOADER_ID, bundle, this);
@@ -137,8 +179,8 @@ String date = mYear + "-" + mMonth + "-" + mDay;
     }
 
     protected Dialog onCreateDialog(int id) {
-             DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+             DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, calendarToday.get(Calendar.YEAR),
+                    calendarToday.get(Calendar.MONTH), calendarToday.get(Calendar.DAY_OF_MONTH));
         tpd.getDatePicker().setMaxDate(new Date().getTime());
             return tpd;
 

@@ -13,17 +13,10 @@
         android:id="@+id/toolbar_actionbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize" />
-
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+            android:id="@+id/liner"
             android:layout_height="match_parent">
 
             <TextView
@@ -45,7 +38,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="270dp"
                 android:id="@+id/imageView"
                 android:clickable="true"
                 android:onClick="setImgWallpaper"
@@ -57,11 +50,11 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:textSize="15sp"
+                android:textSize="10sp"
                 android:id="@+id/textView2"
                 android:layout_below="@+id/imageView"
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>

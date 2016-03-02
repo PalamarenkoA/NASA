@@ -1,4 +1,4 @@
-package com.example.andrey.nasa;
+package com.example.andrey.nasa.listener;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;

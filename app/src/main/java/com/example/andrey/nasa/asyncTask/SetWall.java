@@ -1,8 +1,10 @@
-package com.example.andrey.nasa;
+package com.example.andrey.nasa.asyncTask;
 
 import android.app.WallpaperManager;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.example.andrey.nasa.ApplicationMy;
 
 import java.io.IOException;
 import java.net.URL;

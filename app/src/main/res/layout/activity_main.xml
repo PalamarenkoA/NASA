@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.MainActivity"
     android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
         app:titleTextColor="@color/colorText"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +14,8 @@
         android:id="@+id/toolbar_actionbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize" />
-        <LinearLayout
+
+    <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:id="@+id/liner"
